@@ -38,6 +38,7 @@ export const App = () => {
           'No goods selected'
         )}
       </h1>
+
       <table className="table">
         <tbody>
           {goods.map(good => (
@@ -49,25 +50,35 @@ export const App = () => {
               }
             >
               <td>
-                {good === selectedGood ? (
-                  <button
-                    data-cy="RemoveButton"
-                    type="button"
-                    className="button is-info"
-                    onClick={handleClear}
-                  >
-                    -
-                  </button>
-                ) : (
-                  <button
-                    data-cy="AddButton"
-                    type="button"
-                    className="button"
-                    onClick={() => handleSelect(good)}
-                  >
-                    +
-                  </button>
-                )}
+                {(() => {
+                  if (!selectedGood) {
+                    return (
+                      <button
+                        data-cy="AddButton"
+                        type="button"
+                        className="button"
+                        onClick={() => handleSelect(good)}
+                      >
+                        +
+                      </button>
+                    );
+                  }
+
+                  if (selectedGood === good) {
+                    return (
+                      <button
+                        data-cy="RemoveButton"
+                        type="button"
+                        className="button is-info"
+                        onClick={handleClear}
+                      >
+                        -
+                      </button>
+                    );
+                  }
+
+                  return null;
+                })()}
               </td>
 
               <td data-cy="GoodTitle" className="is-vcentered">
